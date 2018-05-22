@@ -1,36 +1,35 @@
 package edu.handong.csee.java.chatcounter;
 
-import java.util.List;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.ArrayList;
+
 
 public class Main_Counter {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		DataReader r = new DataReader();
+		DataReaderForCSV rc = new DataReaderForCSV();
 		DataReaderForTXT rt = new DataReaderForTXT();
+		DataPrinter p = new DataPrinter();
 		MessageFilter mf = new MessageFilter();
-		HashMap<String, Integer> list = new HashMap<String, Integer>();
+		
 		ArrayList<String> data = new ArrayList<String>();
-	
-		data = r.getData(args[0]);
+		HashMap<String, Integer> list = new HashMap<String, Integer>();
+		
+		r.getData(args[0]);
+		rc.parseCSV(r.messageforCSV);
+		rt.parseTXT(r.messageforTXT);
+		data.addAll(rc.parsedCSVMessage);
+		data.addAll(rt.parsedTXTMessage);
+
 		data = mf.delDuplicates(data);
-		
-		for(String readLine : data) {
-			System.out.println(readLine);
-		}
-		
-		list =rt.CountDataForTXT(data);
-		Iterator<String> nameList = list.keySet().iterator();
-		System.out.println("kakao_id, count");
-		while(nameList.hasNext()) {
-			String key = nameList.next();
-			System.out.println(key + ", " + list.get(key));
-		}
-		
-			
+//		for(String str : data) {
+//			if(str.contains("[조정훈]"))
+//				System.out.println(str);
+//		}
+		list = r.countData(data);
+		p.printResult(list);
 	}
 
 }

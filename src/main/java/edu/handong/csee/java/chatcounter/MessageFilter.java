@@ -10,6 +10,9 @@ public class MessageFilter {
 		for(int i =0; i < dataList.size(); i++) {
 			if(!resultList.contains(dataList.get(i)))
 				resultList.add(dataList.get(i));
+			else 
+				if(dataList.get(i).contains("[조정훈]"))
+						System.out.println(dataList.get(i));
 		}
 		return resultList;
 	}
