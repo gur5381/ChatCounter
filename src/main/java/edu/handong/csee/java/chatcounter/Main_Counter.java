@@ -19,15 +19,21 @@ public class Main_Counter {
 		
 		r.getData(args[0]);
 		rc.parseCSV(r.messageforCSV);
+		System.out.println("");
 		rt.parseTXT(r.messageforTXT);
 		data.addAll(rc.parsedCSVMessage);
 		data.addAll(rt.parsedTXTMessage);
-
+		for(String str : data) {
+				if(str.contains("[김석진]")) System.out.println(str);
+		}
+		System.out.println("");
 		data = mf.delDuplicates(data);
-//		for(String str : data) {
-//			if(str.contains("[조정훈]"))
-//				System.out.println(str);
-//		}
+		System.out.println("");
+		
+		for(String str : data) {
+			if(str.contains("[김석진]"))
+				System.out.println(str);
+		}
 		list = r.countData(data);
 		p.printResult(list);
 	}

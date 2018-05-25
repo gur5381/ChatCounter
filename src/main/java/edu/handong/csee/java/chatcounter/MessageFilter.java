@@ -11,7 +11,7 @@ public class MessageFilter {
 			if(!resultList.contains(dataList.get(i)))
 				resultList.add(dataList.get(i));
 			else 
-				if(dataList.get(i).contains("[조정훈]"))
+				if(dataList.get(i).contains("[김석진]"))
 						System.out.println(dataList.get(i));
 		}
 		return resultList;

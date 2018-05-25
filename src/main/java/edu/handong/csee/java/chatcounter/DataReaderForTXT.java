@@ -1,7 +1,7 @@
 package edu.handong.csee.java.chatcounter;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+//import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
 import java.util.ArrayList;
 
 
@@ -78,6 +78,7 @@ public class DataReaderForTXT extends DataReader{
 
 		for(String readLine : messageforTXT) {
 			//System.out.println(readLine);
+			//if(readLine.contains("[남재창]")) System.out.println(readLine);
 			if(readLine.startsWith("-")) {
 				yearIndex = readLine.indexOf('년');
 				monthIndex = readLine.indexOf('월');
@@ -91,6 +92,8 @@ public class DataReaderForTXT extends DataReader{
 				date = year + "-" + month + "-" + day;
 			}
 			else if(readLine.startsWith("["))	{
+				readLine = readLine.replace("\"", "\"\"");
+				//System.out.println("[" + date + "] " + readLine);
 				parsedTXTMessage.add("[" + date + "] " + readLine );
 			}
 		}
