@@ -1,7 +1,6 @@
 package edu.handong.csee.java.chatcounter;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import java.util.ArrayList;
 
 public class DataReaderForCSV extends DataReader{

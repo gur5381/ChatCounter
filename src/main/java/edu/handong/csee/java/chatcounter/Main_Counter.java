@@ -13,29 +13,26 @@ public class Main_Counter {
 		DataReaderForTXT rt = new DataReaderForTXT();
 		DataPrinter p = new DataPrinter();
 		MessageFilter mf = new MessageFilter();
+		CommonsCLI cc = new CommonsCLI();
 		
 		ArrayList<String> data = new ArrayList<String>();
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 		
 		r.getData(args[0]);
 		rc.parseCSV(r.messageforCSV);
-		System.out.println("");
 		rt.parseTXT(r.messageforTXT);
 		data.addAll(rc.parsedCSVMessage);
 		data.addAll(rt.parsedTXTMessage);
-		for(String str : data) {
-				if(str.contains("[김석진]")) System.out.println(str);
-		}
-		System.out.println("");
-		data = mf.delDuplicates(data);
-		System.out.println("");
-		
-		for(String str : data) {
-			if(str.contains("[김석진]"))
-				System.out.println(str);
-		}
+//		for(String str : data) {
+//				if(str.contains("[김석진]")) System.out.println(str);
+//		}
+		data = mf.delDuplicates(data);		
+//		for(String str : data) {
+//			if(str.contains("[김석진]"))
+//				System.out.println(str);
+//		}
 		list = r.countData(data);
-		p.printResult(list);
+		p.printResult(list, args[1]);
+		cc.runCLI(list, args);
 	}
-
 }
