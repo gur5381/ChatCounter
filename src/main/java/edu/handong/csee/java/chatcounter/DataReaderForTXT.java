@@ -18,9 +18,9 @@ public class DataReaderForTXT extends DataReader{
 	 * This method is to parse message from TXT files.
 	 * Time and date are mainly parsed because of various types of data.
 	 * Final parsed messages put into the parsedTXTMessage.
-	 * @param messageforTXT
+	 * @param messageForTXT
 	 */
-	public void parseTXT(ArrayList<String> messageforTXT) {
+	public void parseTXT(ArrayList<String> messageForTXT) {
 		int yearIndex=0;
 		int monthIndex=0;
 		int dayIndex=0;
@@ -29,7 +29,7 @@ public class DataReaderForTXT extends DataReader{
 		String month;
 		String day; 
 
-		for(String readLine : messageforTXT) {
+		for(String readLine : messageForTXT) {
 			if(readLine.startsWith("-")) {
 				if(readLine.contains("- 201")) {
 					yearIndex = readLine.indexOf('년');

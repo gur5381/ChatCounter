@@ -17,8 +17,8 @@ import java.io.FileInputStream;
  *
  */
 public class DataReader {
-	public ArrayList<String> messageforTXT = new ArrayList <String>();
-	public ArrayList<String> messageforCSV = new ArrayList <String>();
+	public ArrayList<String> messageForTXT = new ArrayList <String>();
+	public ArrayList<String> messageForCSV = new ArrayList <String>();
 	public ArrayList<String> messages;
 	public String name;
 	public String date;
@@ -71,11 +71,11 @@ public class DataReader {
 				String line = "";
 				if(files[i].getName().endsWith(".txt")) {
 					while((line  = bufReader.readLine()) != null) {
-						messageforTXT.add(line);
+						messageForTXT.add(line);
 					}
 				}
 				else while((line  = bufReader.readLine()) != null) {
-					messageforCSV.add(line);
+					messageForCSV.add(line);
 				}
 				bufReader.close();
 			}catch(FileNotFoundException e) {	

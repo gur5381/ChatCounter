@@ -35,8 +35,8 @@ public class Main_Counter {
 
 		if(cc.runCLI(args)) {
 			r.getData(args[0]);
-			rc.parseCSV(r.messageforCSV);
-			rt.parseTXT(r.messageforTXT);
+			rc.parseCSV(r.messageForCSV);
+			rt.parseTXT(r.messageForTXT);
 			data.addAll(rc.parsedCSVMessage);
 			data.addAll(rt.parsedTXTMessage);
 

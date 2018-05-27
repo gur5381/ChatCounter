@@ -17,9 +17,9 @@ public class DataReaderForCSV extends DataReader{
 	 * It finds name, time, date, data from a line.
 	 * And add them as a sentence which is a same format as TXT message's.
 	 * The parsing result go to the parsedCSVMessage.
-	 * @param messageforCSV
+	 * @param messageForCSV
 	 */
-	public void parseCSV(ArrayList<String> messageforCSV) {
+	public void parseCSV(ArrayList<String> messageForCSV) {
 		int date_end;
 		int name_start;
 		int name_end;
@@ -28,7 +28,7 @@ public class DataReaderForCSV extends DataReader{
 		int data_start;
 		int hour;
 
-		for(String readLine : messageforCSV) {
+		for(String readLine : messageForCSV) {
 
 			if(readLine.startsWith("201")) {
 				name_start = readLine.indexOf("\"");
