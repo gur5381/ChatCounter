@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"edu.handong.csee.java.chatcounter"}]

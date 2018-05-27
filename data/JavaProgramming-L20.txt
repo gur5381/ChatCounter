@@ -1,0 +1,96 @@
+백주열, 윤종욱, 권현우, NYB☆, LMH, ... 님과 카카오톡 대화
+저장한 날짜 : 2018-05-04 11:49:59
+
+--------------- 2018년 4월 27일 금요일 ---------------
+[권현우] [오전 10:39] changing the return integer
+[남재창] [오전 11:08] Lab is a part of a class. Students who leave early without finising the lab today will be marked as "Early Leave." (조퇴).
+--------------- 2018년 4월 29일 일요일 ---------------
+[권현우] [오전 6:52] When we use 'super' to call a constructor(with some private variables) from superclass, does the constructor create another private variable instances in the memory space that is different from superclass' instances?
+[조완서] [오전 7:16] Yes I think so..
+[남재창] [오전 8:24] Yes, I think so too. Private variables are created when we call super. But I'm not sure if two instances are created. Some developer said that one instance is created. https://stackoverflow.com/questions/9005851/does-an-instance-of-superclass-get-created-when-we-instantiate-an-object?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa but I think two instances are created but they are directly connected. Instance of subclass can't directly access private members in superclass. You may write some code to check it. It's interesting discussion. Thanks!
+[권현우] [오전 8:31] oh, I didn't expect the answers to come this early. Thought maybe in Monday or so. Sorry for bothering JC and 완서 in weekend.
+[권현우] [오전 8:32] Thank you so much for the answers! :)
+[남재창] [오전 8:34] Love is not make your people wait ;) I love you guys~
+[권현우] [오전 8:35] (굿)
+[남재창] [오후 2:59] In HW1-7, Prob3 requires knowledge about abtract class which we wil learn on this Tuesday.  So you study abtract class in advance by doing prob3 or may solve other problems first. One of students suggested to provide detailed descriptions for each problem. Sorry for any inconvenience caused. But you can solve with creativity if you can get corret output. From HW2-2, detailed descriptions will be given but without candiate answer code. In additon, current code is not perfect in terms of namaing. You should fix all names if they are not following convetions. So be carefull and do not lose your mark becaseof that. (Hint: For prob1, WhatFriend() is not a proper method name. Check all others.)
+[조완서] [오후 3:23] Ok! thank you JC
+[조정훈] [오후 11:42] 사진
+[조정훈] [오후 11:42] do we use 'this' to refer to current object??
+[남재창] [오후 11:44] since there is no local variable with the same name, 'this' keyword is optional.
+[조정훈] [오후 11:44] okay thanks!!!
+[조정훈] [오후 11:55] 사진
+[조정훈] [오후 11:55] Also , we can use Student type parameter otherStudent for hasSameName method, because Student is a Person, right??
+[조정훈] [오후 11:56] 사진
+[남재창] [오후 11:58] Yeap, Student is a subclass of Person.
+[조정훈] [오후 11:59] Thank you so much(감동)(감동)
+--------------- 2018년 4월 30일 월요일 ---------------
+[남재창] [오전 12:00] No problem~
+[조정훈] [오전 10:36] 사진
+[조정훈] [오전 10:37] Can we get the otherPerson's "name" data which is private like that? 
+[조정훈] [오전 10:39] I think we always get private data by calling getter method..
+[조정훈] [오전 10:41] Oh in this case, the hasSameName method is in Student class, so we don't need to call getter method?
+[조정훈] [오전 10:43] *Student > Person
+[조정훈] [오전 10:57] I think I got the answer(하하)
+I was confused about this part ...
+[조정훈] [오전 10:57] 사진
+[남재창] [오후 12:28] Ok, good self-study. These are always confusing. Now you learnd it :)
+[조정훈] [오후 12:39] Yeap(하하)
+--------------- 2018년 5월 1일 화요일 ---------------
+[남재창] [오전 12:30] Midterm exam scores are shared in the google sheet where I shared your homework scores before. If you think you get better or lower scores than you expected, stop by my office (check my calendar in my homepage and make an appoinment for one of empty slots in my calendar.) One student got full mark (FYI no students got full mark in Java class conducted in Korean.) The lowest score is 13.5.
+[남재창] [오전 12:31] Do not ask me average and std.
+[권현우] [오전 9:45] What's the difference between Abstract class and interface?
+[한별] [오전 9:47] When do we use to the abstract class??
+[Sovan Chhaya] [오전 9:47] Thank
+[한별] [오전 9:52] Clear
+[권현우] [오전 10:12] What's the reason for using exceptions?
+--------------- 2018년 5월 2일 수요일 ---------------
+[남재창] [오후 6:50] HW dealdine is extended (two hours, tha is 23:59 on the same day)
+[Jonathan] [오후 6:51] Thank you professor!!
+[명진] [오후 7:51] then the deadline is still friday professor??
+[남재창] [오후 7:52] It's tomorrow (Thursday).
+[남재창] [오후 7:53] May 3. HW1-7
+[명진] [오후 7:53] oh sorry thanks professor
+[김기철] [오후 7:53] Professor,You're a very gentleman.!! thank you
+[남재창] [오후 7:55] No electricity for two hours. That's why the deadline is extended.
+[김기철] [오후 7:57] Thank you JC~ 
+[samer] [오후 8:03] thanks JC!
+--------------- 2018년 5월 3일 목요일 ---------------
+[조정훈] [오전 8:26] 좋은하루 보내세욤~~
+[조정훈] [오전 8:26] Sorry..
+[남재창] [오전 8:29] Why sorry. You blessed us :) Have a great day all!
+[조정훈] [오전 8:30] (하하)
+[조정훈] [오전 8:30] You too JC
+[조완서] [오전 10:10] Hahaha Have a nice day XD
+[정진혁] [오후 2:20] Professor, do we have slides for gradle installation for Mac?
+[남재창] [오후 2:23] No slide but you can check here: https://gradle.org/install/#manually
+[정진혁] [오후 2:29] I tried with the package manager way and the manual way. Both caused errors. I will try more though! Thank you Professor!!
+[남재창] [오후 2:30] Yeap, try again and follow steps carefully. If your system is already messed up, it might not be easy. Good luck!
+[김석진] [오후 9:46] 사진
+[김석진] [오후 9:47] I followed all these steps
+[김석진] [오후 9:47] 사진
+[김석진] [오후 9:47] but 'Lab13' is not java project
+[김석진] [오후 9:48] anyone who can solve this? :~(
+[한별] [오후 9:48] Did you initiate the github?
+[한별] [오후 9:48] Oh sorry. git!
+[김석진] [오후 9:50] 사진
+[김석진] [오후 9:50] 사진
+[김석진] [오후 9:50] these two steps?
+[한별] [오후 9:51] Yes
+[김석진] [오후 9:51] I did
+[권현우] [오후 9:59] that's maybe
+[권현우] [오후 10:00] did you gradle init?
+[권현우] [오후 10:00] before you gradle init, you don't have anything in the lab13 I guess
+[권현우] [오후 10:01] cd lab13
+[권현우] [오후 10:01] and gradle init --type java-library
+[권현우] [오후 10:01] and in the eclipse import the lab13
+[김석진] [오후 10:03] wow
+[김석진] [오후 10:04] perfectly right!
+[김석진] [오후 10:04] thanks 현우!
+[권현우] [오후 10:05] Great
+[권현우] [오후 10:05] have a nice day with the homework(?)
+[권현우] [오후 10:05] :)
+--------------- 2018년 5월 4일 금요일 ---------------
+[권현우] [오전 9:37] flowing water?
+[권현우] [오전 10:06] 3 lines are added at the end
+[한상민] [오전 10:07] How can I find out.txt?
+[권현우] [오전 10:45] What is the meaning of  Integer.parseInt() ?
