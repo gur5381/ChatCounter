@@ -19,9 +19,21 @@ import java.io.FileInputStream;
 public class DataReader {
 	private ArrayList<String> messageForTXT = new ArrayList <String>();
 	private ArrayList<String> messageForCSV = new ArrayList <String>();
+	/**
+	 * This is a string type field named name.
+	 */
 	public String name;
+	/**
+	 * This is a string type field named date.
+	 */
 	public String date;
+	/**
+	 * This is a string type field named time.
+	 */
 	public String time;
+	/**
+	 * This is a string type field named data.
+	 */
 	public String data ="";
 
 	/**

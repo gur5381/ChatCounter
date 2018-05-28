@@ -34,8 +34,9 @@ public class Main_Counter {
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 
 		try{			
-			if(args.length == 0)throw new NoPathException("Retry with the path in the argument!");
-			r.getData(args[0]);
+			cc.runCLI(args);
+			if(cc.getPath()=="")throw new NoPathException("Retry with the path in the argument.");
+			r.getData(cc.getPath());
 			rc.parseCSV(r.getMessageForCSV());
 			rt.parseTXT(r.getMessageForTXT());
 			data.addAll(rc.getParsedCSVMessage());
@@ -43,8 +44,7 @@ public class Main_Counter {
 
 			data = mf.delDuplicates(data);		
 			list = c.countData(data);
-			data = p.printResult(list, args[1]);
-			cc.runCLI(args, data);
+			p.printResult(list, cc.getFile());
 		}catch(NoPathException e) {
 			System.out.println(e.getMessage());
 		}
