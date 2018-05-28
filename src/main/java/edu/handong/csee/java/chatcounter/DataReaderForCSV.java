@@ -10,7 +10,9 @@ import java.util.ArrayList;
  *
  */
 public class DataReaderForCSV extends DataReader{
-	public ArrayList<String> parsedCSVMessage = new ArrayList<String>();
+	private ArrayList<String> parsedCSVMessage = new ArrayList<String>();
+
+
 
 	/**
 	 * This method does the parsing.
@@ -29,8 +31,8 @@ public class DataReaderForCSV extends DataReader{
 		int hour;
 
 		for(String readLine : messageForCSV) {
-
 			if(readLine.startsWith("201")) {
+				data = "";
 				name_start = readLine.indexOf("\"");
 				name_end = readLine.indexOf("\"", name_start+1);
 				date_end = readLine.indexOf(" ");
@@ -48,12 +50,27 @@ public class DataReaderForCSV extends DataReader{
 				else if(hour > 12) time = "오후 " + (hour-12) + time.substring(2, time.length());
 
 				name = readLine.substring(name_start+1, name_end);
-				if(readLine.endsWith("\"")) data = readLine.substring(data_start+1, readLine.length()-1); 
-				else data = readLine.substring(data_start+1, readLine.length());
-				if(data.equals("Photo"))data = "사진";
+				if(readLine.endsWith("\""))data = data + readLine.substring(data_start+1, readLine.length()-1); 
+				else {
+					data = data + readLine.substring(data_start+1, readLine.length()); 
+				}
 
-				parsedCSVMessage.add("[" + date + "] " + "[" + name + "] "+"[" + time + "] " + data);		
-			} 
+			}
+			else if(readLine.equals("Date,User,Message"))continue;
+			else if(readLine.endsWith("\"")) data = data + readLine.substring(0, readLine.length()-1);
+			else data = data + readLine;
+			if(readLine.endsWith("\"")) {
+				if(data.equals("Photo"))data = "사진";
+				parsedCSVMessage.add("[" + date + "] " + "[" + name + "] "+"[" + time + "] " + data);
+			}
 		}
+	}
+
+	/**
+	 * This method is to return parsedCSVMessage.
+	 * @return
+	 */
+	public ArrayList<String> getParsedCSVMessage() {
+		return parsedCSVMessage;
 	}
 }

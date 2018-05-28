@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class DataReaderForTXT extends DataReader{
 
-	public ArrayList<String> parsedTXTMessage = new ArrayList<String>();
+	private ArrayList<String> parsedTXTMessage = new ArrayList<String>();
 
 	/**
 	 * This method is to parse message from TXT files.
@@ -28,7 +28,7 @@ public class DataReaderForTXT extends DataReader{
 		String year;
 		String month;
 		String day; 
-
+		String line = "";
 		for(String readLine : messageForTXT) {
 			if(readLine.startsWith("-")) {
 				if(readLine.contains("- 201")) {
@@ -52,7 +52,7 @@ public class DataReaderForTXT extends DataReader{
 					month = readLine.substring(monthIndex, dayIndex-1);
 					day = readLine.substring(dayIndex, dayEndIndex);
 					if(month.equals("January")) month = "01";
-					else if(month.equals("Febuary")) month = "02";					else if(month.equals("Febuary")) month = "02";
+					else if(month.equals("Febuary")) month = "02";				
 					else if(month.equals("March")) month = "03";
 					else if(month.equals("April")) month = "04";
 					else if(month.equals("May")) month = "05";
@@ -69,6 +69,7 @@ public class DataReaderForTXT extends DataReader{
 
 			}
 			else if(readLine.startsWith("["))	{
+				line = "";
 				int firstclosebr = readLine.indexOf(']');
 				int secondopenbr = readLine.indexOf('[', firstclosebr);
 				int secondclosebr = readLine.indexOf(']', secondopenbr);
@@ -82,11 +83,24 @@ public class DataReaderForTXT extends DataReader{
 					time = "오후 " + time.substring(0, time.length()-3);
 					readLine = readLine.substring(0, secondopenbr+1) + time + readLine.substring(secondclosebr, readLine.length());
 				}
-
 				readLine = readLine.replace("\"", "\"\"");
-
-				parsedTXTMessage.add("[" + date + "] " + readLine );
+				line = "[" + date + "] " + readLine;
+				parsedTXTMessage.add(line);
+			}
+			else if(readLine.contains("님과 카카오톡") || readLine.contains("저장한 날짜") || readLine.isEmpty()) continue;
+			else {
+				parsedTXTMessage.remove(line);
+				line = line + readLine;
+				parsedTXTMessage.add(line);
 			}
 		}
+	}
+
+	/**
+	 * This method is to return parsedTXTMessage.
+	 * @return
+	 */
+	public ArrayList<String> getParsedTXTMessage() {
+		return parsedTXTMessage;
 	}
 }

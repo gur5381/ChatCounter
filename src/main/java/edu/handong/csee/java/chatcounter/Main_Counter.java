@@ -20,7 +20,7 @@ public class Main_Counter {
 	 * All the data and methods from other classes are utilized within this method.
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		// TODO Auto-generated method stub
 
 		DataReader r = new DataReader();
@@ -33,23 +33,20 @@ public class Main_Counter {
 		ArrayList<String> data = new ArrayList<String>();
 		HashMap<String, Integer> list = new HashMap<String, Integer>();
 
-		if(cc.runCLI(args)) {
+		try{			
+			if(args.length == 0)throw new NoPathException("Retry with the path in the argument!");
 			r.getData(args[0]);
-			rc.parseCSV(r.messageForCSV);
-			rt.parseTXT(r.messageForTXT);
-			data.addAll(rc.parsedCSVMessage);
-			data.addAll(rt.parsedTXTMessage);
+			rc.parseCSV(r.getMessageForCSV());
+			rt.parseTXT(r.getMessageForTXT());
+			data.addAll(rc.getParsedCSVMessage());
+			data.addAll(rt.getParsedTXTMessage());
 
 			data = mf.delDuplicates(data);		
 			list = c.countData(data);
-
 			data = p.printResult(list, args[1]);
-			if(cc.print) {
-				System.out.println("Kakao_id, count");
-				for(String str : data) {
-					System.out.println(str);
-				}
-			}
+			cc.runCLI(args, data);
+		}catch(NoPathException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 }

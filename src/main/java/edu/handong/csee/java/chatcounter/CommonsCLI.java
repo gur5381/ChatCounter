@@ -3,9 +3,9 @@ package edu.handong.csee.java.chatcounter;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+import java.util.ArrayList;
 
 /**
  * This is a class for using Commons CLI.
@@ -15,28 +15,24 @@ import org.apache.commons.cli.Options;
  *
  */
 public class CommonsCLI {
-	String path;
-	String file;
-	boolean print;
-	boolean help;
-
+	private boolean print;
 	/**
 	 * This is a method which receives an array of arguments and run the CLI based on the arguments.
 	 * If no argument is given, then it prints help and returns false!
 	 * @param args
 	 * @return
 	 */
-	public boolean runCLI(String[] args) {
+	public void runCLI(String[] args, ArrayList<String> data) {
 		Options options = createOptions();
-
 		if(parseOptions(options, args)) {
-			if(help) {
-				printHelp(options);
+			if(print) {
+				System.out.println("Kakao_id, count");
+				for(String str : data) {
+					System.out.println(str);
+				}
 			}
-			return true;
+			else System.out.println("The result file is Created!\n\"[path] [file] -p\" will print out the counting result. Try!");
 		}
-
-		return false;
 	}
 
 	/**
@@ -55,10 +51,6 @@ public class CommonsCLI {
 		options.addOption(Option.builder("p").longOpt("print")
 				.desc("Print the result of Message Counting!")
 				.build());
-		options.addOption(Option.builder("h").longOpt("help")
-				.desc("Help")
-				.build());
-
 		return options;
 	}
 
@@ -75,28 +67,10 @@ public class CommonsCLI {
 
 		try {
 			CommandLine cmd = parser.parse(options, args);
-			path = args[0];
-			file = args[1];
-			help = cmd.hasOption("h");
 			print = cmd.hasOption("p");
 		}catch(Exception e) {
-			printHelp(options);
 			return false;
 		}
-
 		return true;
 	}
-	/**
-	 * This is a method for printing the help messages.
-	 * I put the header of this program and the footer for those who want to report issues of my code.
-	 * @param options
-	 */
-	public void printHelp(Options options) {
-		HelpFormatter formatter = new HelpFormatter();
-		String header = "KakaoTalk Message Counting Program";
-		String footer = "\nPlease report issues at https://github.com/gur5381/ChatCounter/issues";
-		formatter.printHelp("ChatCounter", header, options, footer, true);
-	}
-
-
 }

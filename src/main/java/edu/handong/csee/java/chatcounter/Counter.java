@@ -10,8 +10,6 @@ import java.util.HashMap;
  *
  */
 public class Counter {
-	HashMap<String, Integer> counted = new HashMap<String, Integer>();
-
 	/**
 	 * This is a method for counting.
 	 * It finds a name from a line automatically and start counting.
@@ -20,6 +18,7 @@ public class Counter {
 	 * @return
 	 */
 	public HashMap<String, Integer> countData(ArrayList<String> list){
+		HashMap<String, Integer> counted = new HashMap<String, Integer>();
 		for(String readLine : list) {
 			int io_start = readLine.indexOf('[', 11); 
 			int io_end = readLine.indexOf(']', 12);

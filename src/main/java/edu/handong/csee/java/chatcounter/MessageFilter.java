@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class MessageFilter {
-	static ArrayList<String> resultList;
+	private ArrayList<String> resultList;
 
 	/**
 	 * In this method, all the messages are filtered to have no redundant messages.

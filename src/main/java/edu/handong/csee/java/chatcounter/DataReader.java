@@ -17,13 +17,13 @@ import java.io.FileInputStream;
  *
  */
 public class DataReader {
-	public ArrayList<String> messageForTXT = new ArrayList <String>();
-	public ArrayList<String> messageForCSV = new ArrayList <String>();
-	public ArrayList<String> messages;
+	private ArrayList<String> messageForTXT = new ArrayList <String>();
+	private ArrayList<String> messageForCSV = new ArrayList <String>();
 	public String name;
 	public String date;
 	public String time;
-	public String data;
+	public String data ="";
+
 	/**
 	 * This gets the path name from the arguments and starts reading the files in it.
 	 * All the files in the folder will be stored and sent to the readFiles.
@@ -85,6 +85,23 @@ public class DataReader {
 			}
 		}
 	}
+
+	/**
+	 * This method is to return messageForTXT.
+	 * @return
+	 */
+	public ArrayList<String> getMessageForTXT() {
+		return messageForTXT;
+	}
+
+	/**
+	 * This method is to return messageForCSV.
+	 * @return
+	 */
+	public ArrayList<String> getMessageForCSV() {
+		return messageForCSV;
+	}
+
 
 }
 
