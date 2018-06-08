@@ -24,8 +24,6 @@ public class Main_Counter {
 		// TODO Auto-generated method stub
 
 		DataReader r = new DataReader();
-		DataReaderForCSV rc = new DataReaderForCSV();
-		DataReaderForTXT rt = new DataReaderForTXT();
 		DataPrinter p = new DataPrinter();
 		MessageFilter mf = new MessageFilter();
 		CommonsCLI cc = new CommonsCLI();
@@ -37,11 +35,11 @@ public class Main_Counter {
 			cc.runCLI(args);
 			if(cc.getPath()=="")throw new NoPathException("Retry with the path in the argument.");
 			r.getData(cc.getPath());
-			rc.parseCSV(r.getMessageForCSV());
-			rt.parseTXT(r.getMessageForTXT());
-			data.addAll(rc.getParsedCSVMessage());
-			data.addAll(rt.getParsedTXTMessage());
-
+			data = r.getMessages();
+//			for(String readline : data) {
+//				System.out.println(readline);
+//			}
+			
 			data = mf.delDuplicates(data);		
 			list = c.countData(data);
 			p.printResult(list, cc.getFile());

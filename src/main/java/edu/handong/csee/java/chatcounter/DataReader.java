@@ -1,13 +1,9 @@
 package edu.handong.csee.java.chatcounter;
 
-import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
+
 
 /**
  * This class does the main role in this program.
@@ -16,9 +12,11 @@ import java.io.FileInputStream;
  * @author jeongjinhyeog
  *
  */
-public class DataReader {
-	private ArrayList<String> messageForTXT = new ArrayList <String>();
-	private ArrayList<String> messageForCSV = new ArrayList <String>();
+public class DataReader{
+	public ArrayList<String> messages = new ArrayList<String>();
+
+	public ArrayList<String> messageForTXT = new ArrayList <String>();
+	public ArrayList<String> messageForCSV = new ArrayList <String>();
 	/**
 	 * This is a string type field named name.
 	 */
@@ -75,47 +73,55 @@ public class DataReader {
 	 */
 	public void readFiles(File[] files){
 		int i;
+		ArrayList<CSVFileReaderThread> csvWorkers = new ArrayList<CSVFileReaderThread>();
+		ArrayList<Thread> lstThreads = new ArrayList<Thread>();
+		ArrayList<TXTFileReaderThread> txtWorkers = new ArrayList<TXTFileReaderThread>();
+
 		for(i = 0; i < Array.getLength(files); i++) {
-			try {
-				BufferedReader bufReader = new BufferedReader(
-						new InputStreamReader(
-								new FileInputStream(files[i]), "UTF-8"));
-				String line = "";
-				if(files[i].getName().endsWith(".txt")) {
-					while((line  = bufReader.readLine()) != null) {
-						messageForTXT.add(line);
-					}
-				}
-				else while((line  = bufReader.readLine()) != null) {
-					messageForCSV.add(line);
-				}
-				bufReader.close();
-			}catch(FileNotFoundException e) {	
-				System.out.println(e);
-			}catch(IOException e) {
-				System.out.println(e);
+			if(files[i].getName().endsWith(".csv")) {
+				System.out.println("Read a file: " + files[i].getName());
+				CSVFileReaderThread csvFileReader = new CSVFileReaderThread(files[i]);
+				csvWorkers.add(csvFileReader);
+				Thread worker = new Thread(csvFileReader);
+				lstThreads.add(worker);
+				worker.start();
 			}
 		}
+		for(i = 0; i < Array.getLength(files); i++) {
+			if(files[i].getName().endsWith(".txt")) {
+				System.out.println("Read a file: " + files[i].getName());
+				TXTFileReaderThread txtFileReader = new TXTFileReaderThread(files[i]);
+				txtWorkers.add(txtFileReader);
+				Thread worker = new Thread(txtFileReader);
+				worker.start();
+				lstThreads.add(worker);
+			}
+		}
+		//join
+		for(Thread thread:lstThreads) {
+			try {
+				thread.join();
+			}catch(InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		//merge all messages
+		for(TXTFileReaderThread worker:txtWorkers) {
+			messages.addAll(worker.messages);
+		}
+
+		for(CSVFileReaderThread worker:csvWorkers) {
+			messages.addAll(worker.messages);
+		}
+
 	}
 
-	/**
-	 * This method is to return messageForTXT.
-	 * @return
-	 */
-	public ArrayList<String> getMessageForTXT() {
-		return messageForTXT;
+	public ArrayList<String> getMessages() {
+		return messages;
 	}
-
-	/**
-	 * This method is to return messageForCSV.
-	 * @return
-	 */
-	public ArrayList<String> getMessageForCSV() {
-		return messageForCSV;
-	}
-
-
 }
+
 
 
 
