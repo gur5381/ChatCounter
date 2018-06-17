@@ -36,10 +36,6 @@ public class Main_Counter {
 			if(cc.getPath()=="")throw new NoPathException("Retry with the path in the argument.");
 			r.getData(cc.getPath());
 			data = r.getMessages();
-//			for(String readline : data) {
-//				System.out.println(readline);
-//			}
-			
 			data = mf.delDuplicates(data);		
 			list = c.countData(data);
 			p.printResult(list, cc.getFile());

@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class TXTFileReaderThread extends DataReader implements Runnable {
-	private ArrayList<String> parsedTXTMessage = new ArrayList<String>();
-	private File file;
+	public ArrayList<String> TXTmessages = new ArrayList<String>();
+	public File file;
 
 	public TXTFileReaderThread(File file) {
 		this.file = file;
@@ -100,13 +100,13 @@ public class TXTFileReaderThread extends DataReader implements Runnable {
 				}
 				readLine = readLine.replace("\"", "\"\"");
 				line = "[" + date + "] " + readLine;
-				parsedTXTMessage.add(line);
+				TXTmessages.add(line);
 			}
 			else if(readLine.contains("님과 카카오톡") || readLine.contains("저장한 날짜") || readLine.isEmpty()) continue;
 			else {
-				parsedTXTMessage.remove(line);
+				TXTmessages.remove(line);
 				line = line + readLine;
-				parsedTXTMessage.add(line);
+				TXTmessages.add(line);
 			}
 		}
 	}
@@ -116,7 +116,7 @@ public class TXTFileReaderThread extends DataReader implements Runnable {
 	 * @return
 	 */
 	public ArrayList<String> getParsedTXTMessage() {
-		return parsedTXTMessage;
+		return TXTmessages;
 	}
 }
 

@@ -3,6 +3,10 @@ package edu.handong.csee.java.chatcounter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.io.File;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 /**
@@ -14,7 +18,6 @@ import java.io.File;
  */
 public class DataReader{
 	public ArrayList<String> messages = new ArrayList<String>();
-
 	public ArrayList<String> messageForTXT = new ArrayList <String>();
 	public ArrayList<String> messageForCSV = new ArrayList <String>();
 	/**
@@ -73,47 +76,49 @@ public class DataReader{
 	 */
 	public void readFiles(File[] files){
 		int i;
-		ArrayList<CSVFileReaderThread> csvWorkers = new ArrayList<CSVFileReaderThread>();
+		ArrayList<CSVFileReaderThread> csvRunners = new ArrayList<CSVFileReaderThread>();
 		ArrayList<Thread> lstThreads = new ArrayList<Thread>();
-		ArrayList<TXTFileReaderThread> txtWorkers = new ArrayList<TXTFileReaderThread>();
-
+		ArrayList<TXTFileReaderThread> txtRunners = new ArrayList<TXTFileReaderThread>();
+		int numOfCoresInMyCPU = Runtime.getRuntime().availableProcessors();
+		ExecutorService executor = Executors.newFixedThreadPool(numOfCoresInMyCPU);
+		ArrayList<Callable<Object>> calls = new ArrayList<Callable<Object>>();
+		
 		for(i = 0; i < Array.getLength(files); i++) {
 			if(files[i].getName().endsWith(".csv")) {
-				System.out.println("Read a file: " + files[i].getName());
-				CSVFileReaderThread csvFileReader = new CSVFileReaderThread(files[i]);
-				csvWorkers.add(csvFileReader);
-				Thread worker = new Thread(csvFileReader);
-				lstThreads.add(worker);
-				worker.start();
+				Runnable worker = new CSVFileReaderThread(files[i]);
+				csvRunners.add((CSVFileReaderThread)worker);
+				calls.add(Executors.callable(worker));
 			}
 		}
+		
 		for(i = 0; i < Array.getLength(files); i++) {
 			if(files[i].getName().endsWith(".txt")) {
-				System.out.println("Read a file: " + files[i].getName());
-				TXTFileReaderThread txtFileReader = new TXTFileReaderThread(files[i]);
-				txtWorkers.add(txtFileReader);
-				Thread worker = new Thread(txtFileReader);
-				worker.start();
-				lstThreads.add(worker);
+				Runnable worker = new TXTFileReaderThread(files[i]);
+				txtRunners.add((TXTFileReaderThread)worker);
+				calls.add(Executors.callable(worker));
 			}
 		}
-		//join
-		for(Thread thread:lstThreads) {
-			try {
-				thread.join();
-			}catch(InterruptedException e) {
-				e.printStackTrace();
-			}
+		
+		try {
+			executor.invokeAll(calls); // This line will be terminated after all threads are terminated.
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		
+		
+		
+		executor.shutdown();
 
 		//merge all messages
-		for(TXTFileReaderThread worker:txtWorkers) {
-			messages.addAll(worker.messages);
+		for(CSVFileReaderThread worker:csvRunners) {
+			messages.addAll(worker.CSVmessages);
 		}
 
-		for(CSVFileReaderThread worker:csvWorkers) {
-			messages.addAll(worker.messages);
+		for(TXTFileReaderThread worker:txtRunners) {
+			messages.addAll(worker.TXTmessages);
 		}
+
+
 
 	}
 

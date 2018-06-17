@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class CSVFileReaderThread extends DataReader implements Runnable {
-	public ArrayList<String> messages = new ArrayList<String>();
-	private File file;
+	public ArrayList<String> CSVmessages = new ArrayList<String>();
+	public File file;
 
 	public CSVFileReaderThread(File file) {
 		this.file = file;
@@ -85,7 +85,7 @@ public class CSVFileReaderThread extends DataReader implements Runnable {
 			else data = data + readLine;
 			if(readLine.endsWith("\"")) {
 				if(data.equals("Photo"))data = "사진";
-				messages.add("[" + date + "] " + "[" + name + "] "+"[" + time + "] " + data);
+				CSVmessages.add("[" + date + "] " + "[" + name + "] "+"[" + time + "] " + data);
 			}
 		}
 	}
@@ -95,7 +95,7 @@ public class CSVFileReaderThread extends DataReader implements Runnable {
 	 * @return
 	 */
 	public ArrayList<String> getParsedCSVMessage() {
-		return messages;
+		return CSVmessages;
 	}
 }
 
