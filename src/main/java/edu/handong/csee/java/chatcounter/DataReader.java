@@ -54,14 +54,14 @@ public class DataReader{
 	 * @param strDir
 	 */
 	public void getData(String strDir){
-			try {
-				File myDir = getDirectory(strDir);
-				File[] files = getListOfFilesFromDirectory(myDir);
-				readFiles(files);
-			}catch(NullPointerException e) {
-				System.out.println("Wrong input directory path. Retry with the right path.");
-				System.exit(0);
-			}
+		try {
+			File myDir = getDirectory(strDir);
+			File[] files = getListOfFilesFromDirectory(myDir);
+			readFiles(files);
+		}catch(NullPointerException e) {
+			System.out.println("Wrong input directory path. Retry with the right path.");
+			System.exit(0);
+		}
 	}
 	/**
 	 * This method changes string type directory name to the file type.
@@ -70,8 +70,8 @@ public class DataReader{
 	 * @return
 	 */
 	public File getDirectory(String strDir) {
-				File myDirectory = new File(strDir);
-				return myDirectory;
+		File myDirectory = new File(strDir);
+		return myDirectory;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class DataReader{
 		int numOfCoresInMyCPU = Runtime.getRuntime().availableProcessors();
 		ExecutorService executor = Executors.newFixedThreadPool(numOfCoresInMyCPU);
 		ArrayList<Callable<Object>> calls = new ArrayList<Callable<Object>>();
-		
+
 		for(i = 0; i < Array.getLength(files); i++) {
 			if(files[i].getName().endsWith(".csv")) {
 				Runnable worker = new CSVFileReaderThread(files[i]);
@@ -106,7 +106,7 @@ public class DataReader{
 				calls.add(Executors.callable(worker));
 			}
 		}
-		
+
 		for(i = 0; i < Array.getLength(files); i++) {
 			if(files[i].getName().endsWith(".txt")) {
 				Runnable worker = new TXTFileReaderThread(files[i]);
@@ -114,18 +114,18 @@ public class DataReader{
 				calls.add(Executors.callable(worker));
 			}
 		}
-		
+
 		try {
 			executor.invokeAll(calls);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
+
+
+
 		executor.shutdown();
 
-		
+
 		for(CSVFileReaderThread worker:csvRunners) {
 			messages.addAll(worker.CSVMessages);
 		}

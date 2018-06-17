@@ -24,7 +24,7 @@ public class TXTFileReaderThread extends DataReader implements Runnable {
 	 * This is File type field named file.
 	 */
 	public File file;
-	
+
 	/**
 	 * This is a constructor which receives the file data and store the data as file.
 	 * @param file
@@ -40,7 +40,7 @@ public class TXTFileReaderThread extends DataReader implements Runnable {
 	public void run() {
 		parseTXT(file);
 	}
-	
+
 	/**
 	 * This method does the actual parsing of TXT files.
 	 * As the type of TXT, CSV data is different, it is need to parsed as the same type.
@@ -62,7 +62,7 @@ public class TXTFileReaderThread extends DataReader implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		int yearIndex=0;
 		int monthIndex=0;
 		int dayIndex=0;

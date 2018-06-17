@@ -20,7 +20,7 @@ public class CSVFileReaderThread extends DataReader implements Runnable {
 	 * This is an ArrayList type field named CSVMessages.
 	 */
 	public ArrayList<String> CSVMessages = new ArrayList<String>();
-	
+
 	/**
 	 * This is a File type field named file.
 	 */
