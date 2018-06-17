@@ -46,6 +46,10 @@ public class DataReader{
 	 * This is a string type field named data.
 	 */
 	public String data ="";
+	/**
+	 * This is an integer type field named num.
+	 */
+	public int num;
 
 	/**
 	 * This gets the path name from the arguments and starts reading the files in it.
@@ -53,8 +57,9 @@ public class DataReader{
 	 * If the strDir is wrong, it returns the message to retry with the right path.
 	 * @param strDir
 	 */
-	public void getData(String strDir){
+	public void getData(String strDir, int num){
 		try {
+			this.num = num;
 			File myDir = getDirectory(strDir);
 			File[] files = getListOfFilesFromDirectory(myDir);
 			readFiles(files);
@@ -87,16 +92,16 @@ public class DataReader{
 
 	/**
 	 * This method reads the data line by line and put them in the arrayList type message.
-	 * For this computation this method uses Threadpool with the number of Cores in the CPU.
+	 * For this computation this method uses Threadpool with the number of thread that the user designates.
 	 * each thread is called as a worker and does the role of reading a CSV or TXT file.
 	 * @param files
 	 */
 	public void readFiles(File[] files){
 		int i;
+		
 		ArrayList<CSVFileReaderThread> csvRunners = new ArrayList<CSVFileReaderThread>();
 		ArrayList<TXTFileReaderThread> txtRunners = new ArrayList<TXTFileReaderThread>();
-		int numOfCoresInMyCPU = Runtime.getRuntime().availableProcessors();
-		ExecutorService executor = Executors.newFixedThreadPool(numOfCoresInMyCPU);
+		ExecutorService executor = Executors.newFixedThreadPool(num);
 		ArrayList<Callable<Object>> calls = new ArrayList<Callable<Object>>();
 
 		for(i = 0; i < Array.getLength(files); i++) {

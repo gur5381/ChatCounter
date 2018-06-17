@@ -34,7 +34,7 @@ public class Main_Counter {
 		try{			
 			cc.runCLI(args);
 			if(cc.getPath()=="")throw new NoPathException("Retry with the path in the argument.");
-			r.getData(cc.getPath());
+			r.getData(cc.getPath(), cc.getNum());
 			data = r.getMessages();
 			data = mf.delDuplicates(data);		
 			list = c.countData(data);

@@ -17,6 +17,7 @@ import org.apache.commons.cli.Options;
 public class CommonsCLI {
 	private String path ="";
 	private String file;
+	private int num;
 	private boolean help;
 
 	/**
@@ -43,7 +44,10 @@ public class CommonsCLI {
 	 */
 	public Options createOptions() {
 		Options options = new Options();
-
+		
+		options.addOption(Option.builder("c")
+				.desc("Number of threads to use.")
+				.hasArg().argName("NUM").required().build());
 		options.addOption(Option.builder("i")
 				.desc("Path for the directory containing files.")
 				.hasArg().argName("PATH").required().build());
@@ -61,7 +65,7 @@ public class CommonsCLI {
 
 	/**
 	 * This is Option parsing method.
-	 * the first and second argument data goes to path and file.
+	 * the first, second, third argument data go to num, path and file.
 	 * If h or p options are given from the argument, help and print changes to true.
 	 * @param options
 	 * @param args
@@ -72,6 +76,7 @@ public class CommonsCLI {
 
 		try {
 			CommandLine cmd = parser.parse(options, args);
+			num =  Integer.parseInt(cmd.getOptionValue("c"));;
 			path = cmd.getOptionValue("i");
 			file = cmd.getOptionValue("o");
 			help = cmd.hasOption("h");
@@ -110,6 +115,14 @@ public class CommonsCLI {
 	 */
 	public String getFile() {
 		return file;
+	}
+	
+	/**
+	 * This method return the number of threads.
+	 * @return
+	 */
+	public int getNum() {
+		return num;
 	}
 
 }
