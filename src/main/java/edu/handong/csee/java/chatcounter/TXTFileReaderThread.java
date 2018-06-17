@@ -8,18 +8,45 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ * This class is to read a TXT file with a thread.
+ * To be used as a thread it is using the Runnable interface.
+ * Reading a TXT file is done by the BufferedReader. 
+ * @author jeongjinhyeog
+ *
+ */
 public class TXTFileReaderThread extends DataReader implements Runnable {
-	public ArrayList<String> TXTmessages = new ArrayList<String>();
+	/**
+	 * This is an ArrayList type field named messages.
+	 */
+	public ArrayList<String> TXTMessages = new ArrayList<String>();
+	/**
+	 * This is File type field named file.
+	 */
 	public File file;
-
+	
+	/**
+	 * This is a constructor which receives the file data and store the data as file.
+	 * @param file
+	 */
 	public TXTFileReaderThread(File file) {
 		this.file = file;
 	}
 
+	/**
+	 * This method is started when the thread.start() is called.
+	 * As the start sign is started, this method start to parse the file.
+	 */
 	public void run() {
 		parseTXT(file);
 	}
 	
+	/**
+	 * This method does the actual parsing of TXT files.
+	 * As the type of TXT, CSV data is different, it is need to parsed as the same type.
+	 * 
+	 * @param file
+	 */
 	public void parseTXT(File file) {
 		try {
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
@@ -100,23 +127,15 @@ public class TXTFileReaderThread extends DataReader implements Runnable {
 				}
 				readLine = readLine.replace("\"", "\"\"");
 				line = "[" + date + "] " + readLine;
-				TXTmessages.add(line);
+				TXTMessages.add(line);
 			}
 			else if(readLine.contains("님과 카카오톡") || readLine.contains("저장한 날짜") || readLine.isEmpty()) continue;
 			else {
-				TXTmessages.remove(line);
+				TXTMessages.remove(line);
 				line = line + readLine;
-				TXTmessages.add(line);
+				TXTMessages.add(line);
 			}
 		}
-	}
-
-	/**
-	 * This method is to return parsedTXTMessage.
-	 * @return
-	 */
-	public ArrayList<String> getParsedTXTMessage() {
-		return TXTmessages;
 	}
 }
 

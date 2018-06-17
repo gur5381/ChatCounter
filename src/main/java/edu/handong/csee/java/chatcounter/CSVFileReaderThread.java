@@ -8,26 +8,47 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ * This class is to read a CSV file with a thread.
+ * To be used as a thread it is using the Runnable interface.
+ * Reading a CSV file is done by the BufferedReader. 
+ * @author jeongjinhyeog
+ *
+ */
 public class CSVFileReaderThread extends DataReader implements Runnable {
-	public ArrayList<String> CSVmessages = new ArrayList<String>();
+	/**
+	 * This is an ArrayList type field named CSVMessages.
+	 */
+	public ArrayList<String> CSVMessages = new ArrayList<String>();
+	
+	/**
+	 * This is a File type field named file.
+	 */
 	public File file;
 
+	/**
+	 * This is a constructor which receives the file data and store the data as file.
+	 * @param file
+	 */
 	public CSVFileReaderThread(File file) {
 		this.file = file;
 	}
 
+	/**
+	 * This method is started when the thread.start() is called.
+	 * As the start sign is started, this method start to parse the file.
+	 */
 	public void run() {
 		parseCSV(file);
 	}
 
 
-
 	/**
-	 * This method does the parsing.
-	 * It finds name, time, date, data from a line.
+	 * * This method does the parsing.
+	 * It receives the file and finds name, time, date, data from the file.
 	 * And add them as a sentence which is a same format as TXT message's.
-	 * The parsing result go to the parsedCSVMessage.
-	 * @param messageForCSV
+	 * The parsing result go to the CSVmessages.
+	 * @param file
 	 */
 	public void parseCSV(File file) {
 
@@ -85,17 +106,9 @@ public class CSVFileReaderThread extends DataReader implements Runnable {
 			else data = data + readLine;
 			if(readLine.endsWith("\"")) {
 				if(data.equals("Photo"))data = "사진";
-				CSVmessages.add("[" + date + "] " + "[" + name + "] "+"[" + time + "] " + data);
+				CSVMessages.add("[" + date + "] " + "[" + name + "] "+"[" + time + "] " + data);
 			}
 		}
-	}
-
-	/**
-	 * This method is to return parsedCSVMessage.
-	 * @return
-	 */
-	public ArrayList<String> getParsedCSVMessage() {
-		return CSVmessages;
 	}
 }
 

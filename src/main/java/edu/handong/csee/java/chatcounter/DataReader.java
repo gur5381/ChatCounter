@@ -6,19 +6,29 @@ import java.io.File;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 
 /**
  * This class does the main role in this program.
  * It reads all the data and classify the messages to TXT and CSV.
+ * In this class, we use threadpool to make the process much faster by using multiple threads.
+ * The goal of this class is to return the messages to the main class.
  * 
  * @author jeongjinhyeog
  *
  */
 public class DataReader{
+	/**
+	 * This is an arrayList type field named messages.
+	 */
 	public ArrayList<String> messages = new ArrayList<String>();
+	/**
+	 * This is an arrayList type field named messageForTXT.
+	 */
 	public ArrayList<String> messageForTXT = new ArrayList <String>();
+	/**
+	 * This is an arrayList type field named messageForCSV.
+	 */
 	public ArrayList<String> messageForCSV = new ArrayList <String>();
 	/**
 	 * This is a string type field named name.
@@ -40,12 +50,18 @@ public class DataReader{
 	/**
 	 * This gets the path name from the arguments and starts reading the files in it.
 	 * All the files in the folder will be stored and sent to the readFiles.
+	 * If the strDir is wrong, it returns the message to retry with the right path.
 	 * @param strDir
 	 */
 	public void getData(String strDir){
-		File myDir = getDirectory(strDir);
-		File[] files = getListOfFilesFromDirectory(myDir);
-		readFiles(files);
+			try {
+				File myDir = getDirectory(strDir);
+				File[] files = getListOfFilesFromDirectory(myDir);
+				readFiles(files);
+			}catch(NullPointerException e) {
+				System.out.println("Wrong input directory path. Retry with the right path.");
+				System.exit(0);
+			}
 	}
 	/**
 	 * This method changes string type directory name to the file type.
@@ -54,8 +70,8 @@ public class DataReader{
 	 * @return
 	 */
 	public File getDirectory(String strDir) {
-		File myDirectory = new File(strDir);
-		return myDirectory;
+				File myDirectory = new File(strDir);
+				return myDirectory;
 	}
 
 	/**
@@ -71,13 +87,13 @@ public class DataReader{
 
 	/**
 	 * This method reads the data line by line and put them in the arrayList type message.
-	 * In this, txt and csv files are divided and then put data separately.
+	 * For this computation this method uses Threadpool with the number of Cores in the CPU.
+	 * each thread is called as a worker and does the role of reading a CSV or TXT file.
 	 * @param files
 	 */
 	public void readFiles(File[] files){
 		int i;
 		ArrayList<CSVFileReaderThread> csvRunners = new ArrayList<CSVFileReaderThread>();
-		ArrayList<Thread> lstThreads = new ArrayList<Thread>();
 		ArrayList<TXTFileReaderThread> txtRunners = new ArrayList<TXTFileReaderThread>();
 		int numOfCoresInMyCPU = Runtime.getRuntime().availableProcessors();
 		ExecutorService executor = Executors.newFixedThreadPool(numOfCoresInMyCPU);
@@ -100,7 +116,7 @@ public class DataReader{
 		}
 		
 		try {
-			executor.invokeAll(calls); // This line will be terminated after all threads are terminated.
+			executor.invokeAll(calls);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -109,19 +125,22 @@ public class DataReader{
 		
 		executor.shutdown();
 
-		//merge all messages
+		
 		for(CSVFileReaderThread worker:csvRunners) {
-			messages.addAll(worker.CSVmessages);
+			messages.addAll(worker.CSVMessages);
 		}
 
 		for(TXTFileReaderThread worker:txtRunners) {
-			messages.addAll(worker.TXTmessages);
+			messages.addAll(worker.TXTMessages);
 		}
 
 
 
 	}
-
+	/**
+	 * This is to return the messages.
+	 * @return
+	 */
 	public ArrayList<String> getMessages() {
 		return messages;
 	}
